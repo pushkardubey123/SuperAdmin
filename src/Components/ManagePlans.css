@@ -1,0 +1,299 @@
+/* =========================================================
+   ULTRA PREMIUM SAAS UI - MANAGE PLANS & CLIENTS
+========================================================= */
+:root {
+  --mp-primary: #4f46e5;
+  --mp-primary-hover: #4338ca;
+  --mp-bg-light: #f8fafc;
+  --mp-text-main: #0f172a;
+  --mp-text-muted: #64748b;
+}
+
+.mp-wrapper {
+  font-family: 'Inter', system-ui, sans-serif;
+  padding-bottom: 50px;
+}
+
+/* 🔥 GLASSMORPHISM EFFECT 🔥 */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 0 10px 40px 0 rgba(31, 38, 135, 0.05) !important;
+  border-radius: 20px;
+}
+
+/* ANIMATIONS */
+.fade-in-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- HEADER --- */
+.mp-page-header {
+  padding: 24px 30px;
+  margin-bottom: 30px;
+}
+
+.mp-btn-create {
+  background: linear-gradient(135deg, var(--mp-primary), #3b82f6);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+  text-decoration: none;
+}
+.mp-btn-create:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(79, 70, 229, 0.4);
+  color: white;
+}
+
+/* --- PLAN CARDS --- */
+.mp-plan-card {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.mp-plan-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(79, 70, 229, 0.15) !important;
+  border-color: rgba(79, 70, 229, 0.4) !important;
+}
+
+/* Accent Line */
+.mp-plan-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; width: 100%; height: 4px;
+  background: linear-gradient(90deg, #4f46e5, #0ea5e9);
+  opacity: 0; transition: 0.3s ease;
+}
+.mp-plan-card:hover::before { opacity: 1; }
+
+.mp-card-actions {
+  position: absolute; top: 15px; right: 15px;
+  display: flex; gap: 8px; opacity: 0;
+  transform: translateY(-10px); transition: all 0.3s ease;
+}
+.mp-plan-card:hover .mp-card-actions { opacity: 1; transform: translateY(0); }
+
+.mp-action-btn {
+  width: 35px; height: 35px; border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.9);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: 0.2s; color: var(--mp-text-muted);
+}
+.mp-action-btn.edit:hover { background: #eff6ff; color: #3b82f6; border-color: #3b82f6; }
+.mp-action-btn.delete:hover { background: #fef2f2; color: #ef4444; border-color: #ef4444; }
+
+/* Pricing */
+.mp-price-section {
+  text-align: center; padding: 30px 20px 20px;
+  border-bottom: 1px dashed rgba(0,0,0,0.1);
+}
+.mp-plan-price {
+  font-size: 2.8rem; font-weight: 900; margin: 0;
+  background: linear-gradient(135deg, #1e293b, #4f46e5);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+/* --- FIX: MODAL BEHIND SIDEBAR --- */
+.mp-modal-overlay {
+  position: fixed !important;
+  top: 0 !important; left: 0 !important;
+  width: 100vw !important; height: 100vh !important;
+  background-color: rgba(15, 23, 42, 0.5) !important;
+  backdrop-filter: blur(8px) !important;
+  z-index: 10500 !important; /* Forces above everything */
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+
+.mp-modal-dialog {
+  width: 100%; max-width: 1000px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px; overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+  animation: modalPop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalPop {
+  from { transform: scale(0.95) translateY(20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Custom Checkbox Grid for Modal */
+.mp-module-select-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+.mp-module-select-card {
+  border: 1px solid rgba(0,0,0,0.1); border-radius: 12px; padding: 12px;
+  cursor: pointer; transition: 0.2s; display: flex; align-items: center;
+  background: rgba(255,255,255,0.7); font-weight: 600; font-size: 0.85rem; color: var(--mp-text-muted);
+}
+.mp-module-select-card.active {
+  border-color: var(--mp-primary); background: rgba(79, 70, 229, 0.05); color: var(--mp-primary);
+}
+
+/* --- TABLE STYLING --- */
+.table-glass th { background: transparent !important; color: #475569 !important; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; border-bottom: 2px solid rgba(0,0,0,0.05); }
+.table-glass td { background: transparent !important; border-bottom: 1px solid rgba(0,0,0,0.03); vertical-align: middle; padding: 16px 12px; }
+.table-glass tr:hover td { background: rgba(255,255,255,0.5) !important; }
+/* =========================================
+   🔥 PREMIUM PLAN SELECTOR (SWEETALERT) 🔥
+========================================= */
+
+.premium-swal-popup {
+  border-radius: 24px !important;
+  padding: 25px 20px !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3) !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
+}
+
+.premium-plan-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 15px;
+  text-align: left;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* Custom Sleek Scrollbar */
+.premium-plan-selector::-webkit-scrollbar { width: 5px; }
+.premium-plan-selector::-webkit-scrollbar-track { background: transparent; }
+.premium-plan-selector::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 50px; }
+
+.plan-radio-input {
+  display: none; 
+}
+
+.plan-radio-card {
+  cursor: pointer;
+  display: block;
+  margin: 0;
+}
+
+/* The Card Container */
+.plan-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  background: #f8fafc;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.plan-radio-card:hover .plan-card-content {
+  border-color: #cbd5e1;
+  background: #f1f5f9;
+  transform: translateY(-2px);
+}
+
+.plan-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.plan-name {
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.plan-duration {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.plan-price {
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: #0f172a;
+  padding-right: 40px; /* Space for the check icon */
+  transition: color 0.3s;
+}
+
+/* Hidden Tick Icon */
+.check-icon {
+  position: absolute;
+  right: 20px;
+  width: 26px;
+  height: 26px;
+  background: #4f46e5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.check-icon svg { width: 14px; height: 14px; }
+
+/* 🌟 ACTIVE/SELECTED STATE 🌟 */
+.plan-radio-input:checked + .plan-card-content {
+  border-color: #4f46e5;
+  background: rgba(79, 70, 229, 0.05);
+  box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.2);
+  transform: translateY(-2px);
+}
+
+.plan-radio-input:checked + .plan-card-content .check-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.plan-radio-input:checked + .plan-card-content .plan-price {
+  color: #4f46e5;
+}
+
+/* Beautiful Swal Buttons */
+.premium-swal-confirm {
+  padding: 12px 30px !important;
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  border-radius: 50px !important;
+  background: linear-gradient(135deg, #4f46e5, #3b82f6) !important;
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+.premium-swal-confirm:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 25px rgba(79, 70, 229, 0.4) !important;
+}
+
+.premium-swal-cancel {
+  padding: 12px 30px !important;
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  border-radius: 50px !important;
+  color: #475569 !important;
+  background: #f1f5f9 !important;
+  transition: background 0.3s ease !important;
+}
+.premium-swal-cancel:hover {
+  background: #e2e8f0 !important;
+}
